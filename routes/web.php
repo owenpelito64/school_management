@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Backend\ProfileController;
 use App\Http\Controllers\Backend\UserController;
 
 /*
@@ -38,4 +39,9 @@ Route::prefix('users')->group(function(){
     Route::get('/edit{id}', [UserController::class, 'EditUser'])->name('user.edit');
     Route::post('/update{id}', [UserController::class, 'UpdateUser'])->name('user.update');
     Route::get('/delete{id}', [UserController::class, 'DeleteUser'])->name('user.delete');
+});
+
+Route::prefix('profiles')->group(function(){
+    Route::get('/view', [ProfileController::class, 'ProfileView'])->name('profile.view');
+    Route::get('/edit', [ProfileController::class, 'ProfileEdit'])->name('profile.edit');
 });
