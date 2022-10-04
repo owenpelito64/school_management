@@ -22,4 +22,33 @@ class ProfileController extends Controller
         
         return view ('backend.users.edit_profile', compact('editData'));
     }
+
+    public function ProfileStore(Request $request){
+        $id = Auth::user()->id;
+        $data = User::find($id);
+        $data->name  = $request->name;
+        $data->email  = $request->email;
+        $data->mobile_number  = $request->mobile_number;
+        $data->address  = $request->address;
+        $data->gender  = $request->gender;
+        $data->profile_photo_path  = $request->profile_photo_path;
+
+        if ($request->file('image')){
+            $file = $request->file('image');
+            @unlink(public_path('upload/user_image'.$data->profie_photo_path));
+            $filename = date('YmdHi').$file->getClientOriginalName();
+            $file->move(public_path('upload/user_images'), $filename);
+            $data['profile_photo_path'] = $filename;
+        }
+
+
+        $data->save();
+
+        $notification = array(
+            'message' => 'User Updated Successfully',
+            'alert-type' => 'info'
+        );
+        return redirect()->route('profile.view')->with($notification);
+    }
+
 }

@@ -16,6 +16,7 @@ class AddMobileAddressToUsersTable extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->string('address',240)->after('password')->nullable();
             $table->string('mobile_number')->nullable();
+            $table->string('gender')->nullable();
         });
     }
 
